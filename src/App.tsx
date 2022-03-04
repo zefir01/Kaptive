@@ -56,18 +56,18 @@ function App() {
     });
 
     const meanCb = useCallback(() => {
-        if (!data) {
+        if (!data || selectedUsers.length === 0 || selectedYears.length === 0 || selectedProducts.length === 0) {
             return "";
         }
         const selected = data.filter(p => {
             let pass = true;
-            if (selectedUsers.length > 0 && !selectedUsers.includes(p[0])) {
+            if (!selectedUsers.includes(p[0])) {
                 pass = false;
             }
-            if (selectedYears.length > 0 && !selectedYears.includes(p[1])) {
+            if (!selectedYears.includes(p[1])) {
                 pass = false;
             }
-            if (selectedProducts.length > 0 && !selectedProducts.includes(p[3])) {
+            if (!selectedProducts.includes(p[3])) {
                 pass = false;
             }
             return pass;
@@ -171,11 +171,14 @@ function App() {
                         </ListGroup>
                     </Col>
                 </Row>
-                <Row className="justify-content-center">
-                    <Col className="col-auto">
-                        <p className="fs-3">Mean score: {mean}</p>
-                    </Col>
-                </Row>
+                {mean.length > 0 ?
+                    <Row className="justify-content-center">
+                        <Col className="col-auto">
+                            <p className="fs-3">Mean score: {mean}</p>
+                        </Col>
+                    </Row>
+                    : null
+                }
             </Container>
         </div>
     );
